@@ -1,0 +1,14 @@
+/* 隐藏所有滚动条 */
+::-webkit-scrollbar {
+    display: none;
+}
+
+/* 对于 Firefox */
+* {
+    scrollbar-width: none;
+}
+
+/* 对于 IE 和 Edge */
+* {
+    -ms-overflow-style: none;
+}

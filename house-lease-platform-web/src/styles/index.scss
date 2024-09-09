@@ -1,0 +1,114 @@
+@import "./define";
+
+$dom: html, body, div, p, h1, h2, h3, h4, h5, h6, dl, dt, dd, ul, ol, li, pre, form, fieldset, input, textarea, blockquote;
+#{$dom} {
+  box-sizing: border-box;
+  margin: 0;
+  //padding: 0;
+}
+
+body {
+  overflow-y: hidden;
+}
+
+a:focus,
+a:active {
+  outline: none;
+}
+
+a,
+a:focus,
+a:hover {
+  cursor: pointer;
+  text-decoration: none;
+  //color: $--primary-color;
+}
+
+.link{
+  color: $--primary-color;
+}
+
+.success {
+  color: $--success-color;
+}
+
+.error, .danger {
+  color: $--error-color;
+}
+
+.warning {
+  color: $--warning-color;
+}
+
+.secondary {
+  color: $--secondary-color;
+}
+
+.primary {
+  color: $--primary-color;
+}
+
+/*
+ 计算常用的间距
+ margin .mt-10 .mr-10 .mb-10 .ml-10
+ padding .pt-10 .pr-10 .pb-10 .pl-10
+ */
+$sizes: 5, 10, 15, 20, 30, 40, 50;
+$ts: 't', 'r', 'b', 'l';
+$ps: 'top', 'right', 'bottom', 'left';
+@for $i from 1 through length($sizes) {
+  $number: nth($sizes, $i);
+  @for $j from 1 through length($ts) {
+    $t: nth($ts, $j);
+    .m#{$t}-#{$number} {
+      margin-#{nth($ps, $j)}: #{($number * 1px)};
+    }
+    .p#{$t}-#{$number} {
+      padding-#{nth($ps, $j)}: #{($number * 1px)};
+    }
+  }
+}
+
+/*
+  计算常用的字体大小
+ */
+$fontSizes: 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 24, 26, 28, 30, 32, 36, 38, 40, 42;
+@for $i from 1 through length($fontSizes) {
+  $number: nth($fontSizes, $i);
+  .font-#{$number} {
+    font-size: #{($number * 1px)};
+  }
+}
+
+/*
+ text-align: center | left | right
+ */
+$aligns: 'center', 'left', 'right';
+@for $i from 1 through length($aligns) {
+  $item: nth($aligns, $i);
+  .text-#{$item} {
+    text-align: #{$item};
+  }
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-start {
+  display: flex !important;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}

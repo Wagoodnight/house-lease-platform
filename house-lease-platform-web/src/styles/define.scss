@@ -1,0 +1,56 @@
+/* 行为相关颜色 */
+$--primary-color: #409eff;
+$--success-color: #4cd964;
+$--warning-color: #f0ad4e;
+$--error-color: #F56C6C;
+$--danger-color: #F56C6C;
+$--info-color: #909399;
+$--secondary-color: #FB8748;
+
+@mixin ellipsis() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin line-clamp-2() {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+@mixin line-clamp-3() {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+@mixin line-clamp($num) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $num;
+  overflow: hidden;
+}
+
+@mixin scrollbar($height: 0) {
+  @if $height != 0 {
+    height: $height
+  }
+  overflow-x: hidden;
+  overflow-y: auto;
+  &::-webkit-scrollbar { /*滚动条整体样式*/
+    width: 8px; /*高宽分别对应横竖滚动条的尺寸*/
+    position: absolute;
+  }
+  &::-webkit-scrollbar-thumb { /*滚动条里面小方块*/
+    border-radius: 10px;
+    transition: all .5s;
+  }
+  &:hover {
+    &::-webkit-scrollbar-thumb { /*滚动条里面小方块*/
+      background-color: rgba(185, 185, 185, 0.7);
+    }
+  }
+}

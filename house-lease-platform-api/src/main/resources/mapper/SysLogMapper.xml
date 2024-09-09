@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.platform.mapper.SysLogMapper">
+
+    <select id="selectByPage" resultType="com.web.platform.entity.SysLog">
+        SELECT log_id, user_id, operate_name, parameter, result, create_time
+        FROM t_sys_log
+        <where>
+            <if test='sysLogQuery.userId != null'>AND user_id = #{sysLogQuery.userId}</if>
+            <if test='sysLogQuery.operateName.trim() != ""'>AND operate_name LIKE CONCAT('%',#{sysLogQuery.operateName},'%')</if>
+            <if test='sysLogQuery.result.trim() != ""'>AND result = #{sysLogQuery.result}</if>
+        </where>
+        ORDER BY log_id DESC
+    </select>
+</mapper>

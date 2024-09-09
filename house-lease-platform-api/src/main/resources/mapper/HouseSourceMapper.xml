@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.platform.mapper.HouseSourceMapper">
+
+    <select id="sourcePage" resultType="com.web.platform.pojo.vo.HouseSourceVO">
+        SELECT house_id, user_id, location, area, room, hall, rest, is_kitchen, is_balcony, house_facing, price, remark, create_time, update_time
+        FROM housing_lease_db.t_house_source
+        <where>
+            <if test="houseSourceQuery.userId != null">
+                AND user_id = #{houseSourceQuery.userId}
+            </if>
+            <if test="houseSourceQuery.location != null and houseSourceQuery.location.trim() != ''">
+                AND location LIKE CONCAT('%', TRIM(#{houseSourceQuery.location}), '%')
+            </if>
+            <if test="houseSourceQuery.area != null">
+                AND area &gt;= #{houseSourceQuery.area}
+            </if>
+            <if test="houseSourceQuery.room != null">
+                AND room = #{houseSourceQuery.room}
+            </if>
+            <if test="houseSourceQuery.hall != null">
+                AND hall = #{houseSourceQuery.hall}
+            </if>
+            <if test="houseSourceQuery.rest != null">
+                AND rest = #{houseSourceQuery.rest}
+            </if>
+            <if test="houseSourceQuery.isKitchen != null">
+                AND is_kitchen = #{houseSourceQuery.isKitchen}
+            </if>
+            <if test="houseSourceQuery.isBalcony != null">
+                AND is_balcony = #{houseSourceQuery.isBalcony}
+            </if>
+            <if test="houseSourceQuery.houseFacing != null">
+                AND house_facing = #{houseSourceQuery.houseFacing}
+            </if>
+            <if test="houseSourceQuery.minPrice != null">
+                AND price &gt;= #{houseSourceQuery.minPrice}
+            </if>
+            <if test="houseSourceQuery.maxPrice != null">
+                AND price &lt;= #{houseSourceQuery.maxPrice}
+            </if>
+            <if test="houseSourceQuery.startTime != null">
+                AND create_time &gt;= #{houseSourceQuery.startTime}
+            </if>
+            <if test="houseSourceQuery.endTime != null">
+                AND create_time &lt;= #{houseSourceQuery.endTime}
+            </if>
+        </where>
+    </select>
+</mapper>

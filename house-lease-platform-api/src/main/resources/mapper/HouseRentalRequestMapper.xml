@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.platform.mapper.HouseRentalRequestMapper">
+
+    <select id="requestPage" resultType="com.web.platform.pojo.vo.HouseRentalRequestVO">
+        SELECT request_id, user_id, location, area, room, hall, rest, is_kitchen, is_balcony, house_facing, price, remark, create_time, update_time
+        FROM housing_lease_db.t_house_rental_request
+        <where>
+            <if test="houseRentalRequestQuery.userId != null">
+                AND user_id = #{houseRentalRequestQuery.userId}
+            </if>
+            <if test="houseRentalRequestQuery.location != null and houseRentalRequestQuery.location.trim() != ''">
+                AND location LIKE CONCAT('%', #{houseRentalRequestQuery.location}, '%')
+            </if>
+            <if test="houseRentalRequestQuery.area != null">
+                AND area = #{houseRentalRequestQuery.area}
+            </if>
+            <if test="houseRentalRequestQuery.room != null">
+                AND room = #{houseRentalRequestQuery.room}
+            </if>
+            <if test="houseRentalRequestQuery.hall != null">
+                AND hall = #{houseRentalRequestQuery.hall}
+            </if>
+            <if test="houseRentalRequestQuery.rest != null">
+                AND rest = #{houseRentalRequestQuery.rest}
+            </if>
+            <if test="houseRentalRequestQuery.isKitchen != null">
+                AND is_kitchen = #{houseRentalRequestQuery.isKitchen}
+            </if>
+            <if test="houseRentalRequestQuery.isBalcony != null">
+                AND is_balcony = #{houseRentalRequestQuery.isBalcony}
+            </if>
+            <if test="houseRentalRequestQuery.houseFacing != null">
+                AND house_facing = #{houseRentalRequestQuery.houseFacing}
+            </if>
+            <if test="houseRentalRequestQuery.minPrice != null">
+                AND price &gt;= #{houseRentalRequestQuery.minPrice}
+            </if>
+            <if test="houseRentalRequestQuery.maxPrice != null">
+                AND price &lt;= #{houseRentalRequestQuery.maxPrice}
+            </if>
+            <if test="houseRentalRequestQuery.startTime != null">
+                AND create_time &gt;= #{houseRentalRequestQuery.startTime}
+            </if>
+            <if test="houseRentalRequestQuery.endTime != null">
+                AND create_time &lt;= #{houseRentalRequestQuery.endTime}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>

@@ -1,0 +1,22 @@
+# IntelliJ IDEA specific files
+.idea/
+*.iml
+
+# Logs
+logs/
+*.log
+
+# Target directory
+target/
+
+# Node.js dependencies
+node_modules/
+
+# Vite cache
+.vite/
+
+# Build artifacts
+dist/
+build/
+
+
