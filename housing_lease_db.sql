@@ -78,7 +78,7 @@ CREATE TABLE `t_sys_log`  (
   `log_id` bigint NOT NULL AUTO_INCREMENT COMMENT '日志ID',
   `user_id` bigint NOT NULL COMMENT '用户ID',
   `operate_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '调用方法',
-  `parameter` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '参数',
+  `parameter` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '参数',
   `result` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '结果',
   `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`log_id`) USING BTREE
