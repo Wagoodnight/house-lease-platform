@@ -20,7 +20,9 @@ public class UserQuery extends Page{
 
     private String email;
 
-    private Integer age;
+    private Integer maxAge;
+
+    private Integer minAge;
 
     private Integer sex;
 

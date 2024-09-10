@@ -23,7 +23,8 @@
         <if test='userQuery.username != null and userQuery.username.trim() != ""'>AND username LIKE CONCAT('%',#{userQuery.username},'%')</if>
         <if test='userQuery.phone != null and userQuery.phone.trim() != ""'>AND phone LIKE CONCAT('%',#{userQuery.phone},'%')</if>
         <if test="userQuery.email != null and userQuery.email.trim() != ''">AND email LIKE CONCAT('%',#{userQuery.email},'%')</if>
-        <if test="userQuery.age != null">AND age = #{userQuery.age}</if>
+        <if test="userQuery.minAge != null">AND age &gt;= #{userQuery.minAge}</if>
+        <if test="userQuery.maxAge != null">AND age &lt;= #{userQuery.maxAge}</if>
         <if test="userQuery.sex != null">AND sex = #{userQuery.sex}</if>
         <if test="userQuery.idCard != null and userQuery.idCard.trim() != ''">AND id_card LIKE CONCAT('%',#{userQuery.idCard},'%')</if>
         <if test="userQuery.role != null">AND role = #{userQuery.role}</if>

@@ -1,11 +1,63 @@
 <template>
+  <div>
+    <el-button @click="show = !show" type="primary">筛选</el-button>
+    <el-button type="primary" :loading="isLoading" :disabled="!show" @click="handleClick">查询</el-button>
+    <el-button @click="formClear" :disabled="!show" type="primary">清空</el-button>
+  </div>
+  <div style="display: flex; flex-direction: column">
+    <div style="margin-top: 20px">
+      <el-collapse-transition>
+        <div v-show="show">
+          <el-form :model="postData" :inline="true" label-width="auto" style="max-width: 100%" class="form-inline">
+            <el-row>
+              <div>
+                <el-form-item label="最低年龄">
+                  <el-input v-model="postData.minAge" style="width: 100px"/>
+                </el-form-item>
+                <el-form-item label="最高年龄">
+                  <el-input v-model="postData.maxAge" style="width: 100px"/>
+                </el-form-item>
+              </div>
+              <el-form-item label="身份证">
+                <el-input v-model="postData.idCard" placeholder="请输入身份证"/>
+              </el-form-item>
+              <el-form-item label="用户ID" >
+                <el-input v-model="postData.userId" placeholder="请输入用户ID"/>
+              </el-form-item>
+              <el-form-item label="权限" style="width: 200px">
+                <el-select v-model="postData.role" placeholder="请选择权限">
+                  <el-option label="管理员" value="2"/>
+                  <el-option label="会员" value="1"/>
+                  <el-option label="游客" value="0"/>
+                </el-select>
+              </el-form-item>
+              <div>
+                <el-form-item label="房源">
+                  <el-radio-group v-model="postData.published">
+                    <el-radio value="1">允许</el-radio>
+                    <el-radio value="0">禁止</el-radio>
+                  </el-radio-group>
+                </el-form-item>
+                <el-form-item label="求购">
+                  <el-radio-group v-model="postData.rentalRequest">
+                    <el-radio value="1">允许</el-radio>
+                    <el-radio value="0">禁止</el-radio>
+                  </el-radio-group>
+                </el-form-item>
+              </div>
+            </el-row>
+          </el-form>
+        </div>
+      </el-collapse-transition>
+    </div>
+  </div>
   <el-table :data="tableData" v-loading="isLoading" style="width: 100%" :max-height="tableMaxHeight" ref="MyTable">
     <el-table-column prop="username" label="用户名" :width="MyTableColumn.usernameWidth"/>
     <el-table-column prop="sex" label="性别" :width="MyTableColumn.sexWidth"/>
     <el-table-column prop="age" label="年龄" :width="MyTableColumn.ageWidth" sortable/>
     <el-table-column prop="role" label="权限" :width="MyTableColumn.ageWidth"/>
-    <el-table-column prop="published" label="房源" :width="MyTableColumn.ageWidth"/>
-    <el-table-column prop="rentalRequest" label="求购" :width="MyTableColumn.ageWidth"/>
+    <el-table-column prop="published" label="房源" :width="MyTableColumn.ageWidth" sortable/>
+    <el-table-column prop="rentalRequest" label="求购" :width="MyTableColumn.ageWidth" sortable/>
     <el-table-column prop="email" label="邮箱" :width="MyTableColumn.emailWidth"/>
     <el-table-column prop="phone" label="电话" :width="MyTableColumn.emailWidth"/>
     <el-table-column fixed="right" label="操作" :min-width="MyTableColumn.rightWidth">
@@ -38,6 +90,17 @@
       </template>
     </el-table-column>
   </el-table>
+  <el-pagination
+      layout="sizes, prev, pager, next, jumper"
+      :background=true
+      :total=IPageRequest.total
+      :page-sizes="[10, 15, 30, 50, 100]"
+      :page-size=IPageRequest.size
+      :current-page.sync=IPageRequest.current
+      style="justify-content: center; margin: 5px"
+      @size-change="handlePageSizeChange"
+      @current-change="handleCurrentPageChange"
+  />
 
   <el-dialog v-model="viewDialog" title="详情" width="65%" center>
     <div style="margin: 10px; line-height: 2; font-weight: bold;" v-loading.fullscreen.lock="detailIsLoading">
@@ -107,6 +170,7 @@ import {userApi} from "../../api/user-api.js";
 import {useResizeObserver} from "@vueuse/core";
 
 const MyTable = ref();
+let show = ref(false);
 let viewEdit = ref(false);
 let isLoading = ref(false);
 let viewDialog = ref(false);
@@ -117,7 +181,8 @@ let tableMaxHeight = '73vh';
 const ruleFormRef = ref();
 
 let postData = ref({
-  age: null,
+  minAge: null,
+  maxAge: null,
   currentPage: 1,
   email: "",
   endTime: "",
@@ -223,6 +288,27 @@ const viewDetails = async (index) => {
     detailIsLoading.value = false;
   }
 };
+
+const formClear = () => {
+  postData.value = {
+    minAge: null,
+    maxAge: null,
+    currentPage: 1,
+    email: "",
+    endTime: "",
+    idCard: "",
+    pageSize: postData.value.pageSize,
+    phone: "",
+    published: null,
+    rentalRequest: null,
+    role: null,
+    sex: null,
+    startTime: "",
+    userId: null,
+    username: ""
+  }
+  handleClick();
+}
 
 const viewEditorDetails = async (index) => {
   viewEdit.value = true;
@@ -349,6 +435,17 @@ const handleClick = async () => {
     isLoading.value = false;
   }
 };
+
+function handlePageSizeChange(size) {
+  postData.value.pageSize = size;
+  postData.value.currentPage = 1;
+  handleClick();
+}
+
+function handleCurrentPageChange(page) {
+  postData.value.currentPage = page;
+  handleClick();
+}
 
 </script>
 
