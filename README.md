@@ -95,6 +95,8 @@
    npm run dev
    ```
    - 默认账号`admin`密码`123456`
+   - 前端默认路径`http://localhost:8083/#/login`
+   - 集成swagger3接口文档，通过`http://localhost:8082/api/doc.html#/`路径访问
 
 ## Tips
 

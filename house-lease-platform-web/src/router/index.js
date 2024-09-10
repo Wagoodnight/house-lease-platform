@@ -62,6 +62,11 @@ const routes = [
                 path: 'useradmin',
                 component:  () => import('../views/admin/userAdmin.vue'),
                 meta: {title: '注册用户管理'}
+            },
+            {
+                path: 'syslog',
+                component:  () => import('../views/admin/sysLog.vue'),
+                meta: {title: '操作日志'}
             }
         ]
     },

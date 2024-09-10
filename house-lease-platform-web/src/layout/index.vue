@@ -34,6 +34,7 @@
             <el-sub-menu index="4" v-if="AutoLogin.isAdmin">
               <template #title>管理</template>
               <el-menu-item index="4-1">已注册用户</el-menu-item>
+              <el-menu-item index="4-2">操作日志</el-menu-item>
             </el-sub-menu>
           </el-menu>
         </el-scrollbar>
@@ -108,6 +109,8 @@ function menuSelect(index) {
     router.push('/useradmin')
   } else if (index === '0') {
     router.push('/dashboard')
+  } else if (index === '4-2') {
+    router.push('/syslog')
   }
 }
 

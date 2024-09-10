@@ -12,10 +12,10 @@
             <el-row>
               <div>
                 <el-form-item label="最低年龄">
-                  <el-input v-model="postData.minAge" style="width: 100px"/>
+                  <el-input v-model="postData.minAge" style="width: 132px"/>
                 </el-form-item>
                 <el-form-item label="最高年龄">
-                  <el-input v-model="postData.maxAge" style="width: 100px"/>
+                  <el-input v-model="postData.maxAge" style="width: 132px"/>
                 </el-form-item>
               </div>
               <el-form-item label="身份证">
@@ -52,13 +52,13 @@
     </div>
   </div>
   <el-table :data="tableData" v-loading="isLoading" style="width: 100%" :max-height="tableMaxHeight" ref="MyTable">
-    <el-table-column prop="username" label="用户名" :width="MyTableColumn.usernameWidth"/>
+    <el-table-column prop="username" label="用户名" :width="MyTableColumn.usernameWidth" show-overflow-tooltip/>
     <el-table-column prop="sex" label="性别" :width="MyTableColumn.sexWidth"/>
     <el-table-column prop="age" label="年龄" :width="MyTableColumn.ageWidth" sortable/>
     <el-table-column prop="role" label="权限" :width="MyTableColumn.ageWidth"/>
     <el-table-column prop="published" label="房源" :width="MyTableColumn.ageWidth" sortable/>
     <el-table-column prop="rentalRequest" label="求购" :width="MyTableColumn.ageWidth" sortable/>
-    <el-table-column prop="email" label="邮箱" :width="MyTableColumn.emailWidth"/>
+    <el-table-column prop="email" label="邮箱" :width="MyTableColumn.emailWidth"  show-overflow-tooltip/>
     <el-table-column prop="phone" label="电话" :width="MyTableColumn.emailWidth"/>
     <el-table-column fixed="right" label="操作" :min-width="MyTableColumn.rightWidth">
       <template #default="scope">
@@ -450,5 +450,10 @@ function handleCurrentPageChange(page) {
 </script>
 
 <style scoped>
+.el-table-column .cell {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 </style>

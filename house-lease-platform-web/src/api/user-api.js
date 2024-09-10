@@ -162,5 +162,12 @@ export const userApi = {
             url: `/user/detail?userId=${data}`,
             method: 'post'
         })
-    }
+    },
+    sysLogPage(data) {
+        return request({
+            url: `/logs/page`,
+            method: 'post',
+            data: data
+        })
+    },
 }

@@ -9,6 +9,8 @@
             <if test='sysLogQuery.userId != null'>AND user_id = #{sysLogQuery.userId}</if>
             <if test='sysLogQuery.operateName.trim() != ""'>AND operate_name LIKE CONCAT('%',#{sysLogQuery.operateName},'%')</if>
             <if test='sysLogQuery.result.trim() != ""'>AND result = #{sysLogQuery.result}</if>
+            <if test='sysLogQuery.startTime != null'>AND create_time &gt;= #{sysLogQuery.startTime}</if>
+            <if test='sysLogQuery.endTime != null'>AND create_time &lt;= #{sysLogQuery.endTime}</if>
         </where>
         ORDER BY log_id DESC
     </select>
