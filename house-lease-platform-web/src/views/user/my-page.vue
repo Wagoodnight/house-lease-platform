@@ -1,6 +1,10 @@
 <template>
-  <el-card class="my-space-card" shadow="hover" v-loading="isLoading">
+  <el-card class="my-space-card" shadow="hover">
     <el-form :model="mySpaceData" label-width="100px">
+
+      <div class="avatar-container">
+        <el-avatar :size="150" :src="mySpaceData.userImg"></el-avatar>
+      </div>
       <el-form-item label="用户名">
         <el-input v-model="mySpaceData.username" readonly></el-input>
       </el-form-item>
@@ -37,54 +41,17 @@
         <el-input v-model="mySpaceData.createTime" readonly></el-input>
       </el-form-item>
 
-
-      <!-- 这里是头像占位，可以后续加上 -->
-      <!-- <el-form-item label="头像">
-        <el-image :src="mySpaceData.userImg" alt="用户头像" v-if="mySpaceData.userImg" />
-      </el-form-item> -->
-
     </el-form>
   </el-card>
 
 </template>
 
 <script setup>
-import { userApi } from "../../api/user-api.js";
-import { onMounted, ref } from "vue";
-let isLoading = ref(false);
+import {inject, onMounted} from "vue";
 
-const mySpaceData = ref({
-  userId: null,
-  username: "",
-  phone: "",
-  email: "",
-  age: null,
-  sex: null,
-  idCard: "",
-  role: "",
-  rentalRequest: null,
-  published: null,
-  userImg: null,
-  lastLoginTime: "",
-  createTime: "",
-  updateTime: ""
-});
-
-const viewSpace = async () => {
-  isLoading.value = true;
-  try {
-    const detail = await userApi.mySpace();
-    mySpaceData.value = {
-      ...detail,
-      role: detail.role === "admin" ? "管理员" : "会员",
-      sex: detail.sex === 0 ? "男" : detail.sex === 1 ? "女" : "其他"
-    };
-  } catch (error) {
-    console.error("An error occurred while fetching data:", error);
-  } finally {
-    isLoading.value = false;
-  }
-};
+// 使用 inject 获取数据和函数
+const mySpaceData = inject('mySpaceData');
+const viewSpace = inject('viewSpace');
 
 onMounted(() => {
   viewSpace();
@@ -95,5 +62,14 @@ onMounted(() => {
 .my-space-card {
   max-width: 600px;
   margin: 20px auto;
+}
+
+.avatar-container {
+  display: flex;       /* 使用flex布局 */
+  justify-content: center; /* 水平居中 */
+  align-items: center; /* 如果需要垂直居中也可以加上这个属性 */
+  height: 100%;       /* 确保父容器有高度 */
+  width: 100%;        /* 确保父容器有宽度 */
+  margin-bottom: 10px;
 }
 </style>
