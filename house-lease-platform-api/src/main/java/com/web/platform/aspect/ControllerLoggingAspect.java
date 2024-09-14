@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.web.platform.common.Const;
 import com.web.platform.common.Response;
 import com.web.platform.entity.SysLog;
+import com.web.platform.exception.ServiceException;
 import com.web.platform.mapper.SysLogMapper;
 import com.web.platform.pojo.CurrentLoginUser;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -77,9 +78,31 @@ public class ControllerLoggingAspect {
                 log.error("Insert log Error!, log: " + sysLog);
             }
 
-        } catch (Exception e) {
+        } catch (ServiceException e) {
             // 记录异常日志，保证controller层逻辑不受影响
             log.error("Logging aspect encountered an error: ", e);
+            SysLog sysLog = new SysLog();
+            sysLog.setResult(e.getCode());
+            // 获取当前登录用户
+            CurrentLoginUser loginUser = (CurrentLoginUser) request.getAttribute(Const.CURRENT_LOGIN_USER);
+
+            if (loginUser == null) {
+                sysLog.setUserId(0L);
+            } else {
+                sysLog.setUserId(loginUser.getUserId());
+            }
+
+            // 记录方法名称
+            String methodName = joinPoint.getSignature().getName();
+            // 记录方法参数
+            Object[] args = joinPoint.getArgs();
+
+            sysLog.setOperateName(methodName);
+            sysLog.setParameter(JSON.toJSONString(args));
+
+            if (sysLogMapper.insert(sysLog) < 1) {
+                log.error("Insert log Error!, log: " + sysLog);
+            }
 
             // 确保目标方法继续执行
             result = joinPoint.proceed();
