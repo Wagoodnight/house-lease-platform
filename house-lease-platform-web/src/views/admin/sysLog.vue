@@ -16,6 +16,9 @@
               <el-form-item label="用户ID">
                 <el-input v-model="postData.userId" style="width: 220px" placeholder="请输入用户ID"/>
               </el-form-item>
+              <el-form-item label="返回结果">
+                <el-input v-model="postData.result" style="width: 220px" placeholder="请输入返回结果"/>
+              </el-form-item>
                 <div>
                   <el-form-item label="开始时间">
                     <el-date-picker
@@ -78,7 +81,7 @@ let postData = ref({
   currentPage: 1,
   operateName: "",
   pageSize: 20,
-  result: "200",
+  result: "",
   userId: null
 });
 
@@ -155,7 +158,7 @@ const formClear = () => {
     currentPage: 1,
     operateName: "",
     pageSize: postData.value.pageSize,
-    result: "200",
+    result: "",
     userId: null,
     startTime: null,
     endTime: null
